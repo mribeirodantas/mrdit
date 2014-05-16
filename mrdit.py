@@ -108,6 +108,19 @@ class MainWindow(QtGui.QMainWindow):
     def terminal(self):
         call(["gnome-terminal"])
 
+    def chooseFont(self):
+        font, ok = QtGui.QFontDialog.getFont()
+
+        if ok:
+            self.textEdit.setFont(font)
+
+    def chooseColor(self):
+        col = QtGui.QColorDialog.getColor()
+
+        if col.isValid():
+            self.textEdit.setStyleSheet("QWidget { color: %s }"
+                % col.name())
+
     # Method for starting up the User Interface
     def initUI(self):
         # Status Bar
@@ -162,12 +175,25 @@ class MainWindow(QtGui.QMainWindow):
         exitAction.setStatusTip(u'Quit the Application')
         exitAction.triggered.connect(self.close)
 
+        chooseFont = QtGui.QAction(QtGui.QIcon(''), '&Font', self)
+        chooseFont.setShortcut('Ctrl+F')
+        chooseFont.setStatusTip(u'Choose font')
+        chooseFont.triggered.connect(self.chooseFont)
+
+
+        chooseColor = QtGui.QAction(QtGui.QIcon(''), '&Color', self)
+        chooseColor.setShortcut('Ctrl+L')
+        chooseColor.setStatusTip(u'Choose color')
+        chooseColor.triggered.connect(self.chooseColor)
+
         # Menu bar
         menubar = self.menuBar()
         fileMenu = menubar.addMenu('&File')
         fileMenu.addAction(newFile)
         fileMenu.addAction(openFile)
         fileMenu.addAction(saveFile)
+        fileMenu.addAction(chooseFont)
+        fileMenu.addAction(chooseColor)
         fileMenu.addAction(incFont)
         fileMenu.addAction(decFont)
         fileMenu.addAction(pyInteractive)
