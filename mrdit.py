@@ -37,9 +37,9 @@ else:  # If it is >= 18 and < 0
 # Username
 username = str(getpass.getuser())
 
-# Default size of text
+# Default style of text
 textSize = '10'
-
+textColor = 'black'
 
 class MainWindow(QtGui.QMainWindow):
 
@@ -95,15 +95,17 @@ class MainWindow(QtGui.QMainWindow):
         self.move(qr.topLeft())
 
     def incFontSize(self):
-        global textSize
+        global textSize, textColor
         textSize = str(int(textSize) + 1)
-        self.textEdit.setStyleSheet('font-size: ' + textSize + 'pt;')
+        self.textEdit.setStyleSheet('font-size: ' + textSize + 'pt; color: %s'
+                                    % textColor)
 
     def decFontSize(self):
         global textSize
         if int(textSize) > 1:
             textSize = str(int(textSize) - 1)
-            self.textEdit.setStyleSheet('font-size: ' + textSize + 'pt;')
+            self.textEdit.setStyleSheet('font-size: ' + textSize +
+                                        'pt; color: %s' % textColor)
 
     def terminal(self):
         call(["gnome-terminal"])
@@ -115,11 +117,14 @@ class MainWindow(QtGui.QMainWindow):
             self.textEdit.setFont(font)
 
     def chooseColor(self):
-        col = QtGui.QColorDialog.getColor()
+        global textColor
 
-        if col.isValid():
-            self.textEdit.setStyleSheet("QWidget { color: %s }"
-                % col.name())
+        color = QtGui.QColorDialog.getColor()
+
+        if color.isValid():
+            self.textEdit.setStyleSheet('font-size: ' + textSize +
+                                        'pt; color: %s' % color.name())
+            textColor = color.name()
 
     # Method for starting up the User Interface
     def initUI(self):
@@ -130,7 +135,7 @@ class MainWindow(QtGui.QMainWindow):
         self.setCentralWidget(self.textEdit)
 
         # Defining text size
-        self.textEdit.setStyleSheet('font-size: ' + textSize + 'pt;')
+        self.textEdit.setStyleSheet('font-size: ' + textSize + 'pt; color: ' + textColor)
 
         # Menu items
 
