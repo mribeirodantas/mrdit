@@ -41,8 +41,8 @@ username = str(getpass.getuser())
 textSize = '10'
 textColor = 'black'
 
-class MainWindow(QtGui.QMainWindow):
 
+class MainWindow(QtGui.QMainWindow):
     # Method for creating a new object of this class
     # AKA class constructor
     def __init__(self):
@@ -170,9 +170,9 @@ class MainWindow(QtGui.QMainWindow):
         decFont.triggered.connect(self.decFontSize)
 
         pyInteractive = QtGui.QAction(QtGui.QIcon('icons/terminal.png'),
-                        'Open &terminal', self)
-        pyInteractive.setShortcut('Ctrl+T')
-        pyInteractive.setStatusTip('Open terminal')
+                        '&Run terminal', self)
+        pyInteractive.setShortcut('Ctrl+R')
+        pyInteractive.setStatusTip('Run terminal')
         pyInteractive.triggered.connect(self.terminal)
 
         exitAction = QtGui.QAction(QtGui.QIcon('icons/exit.png'), '&Quit', self)
@@ -180,13 +180,13 @@ class MainWindow(QtGui.QMainWindow):
         exitAction.setStatusTip(u'Quit the Application')
         exitAction.triggered.connect(self.close)
 
-        chooseFont = QtGui.QAction(QtGui.QIcon(''), '&Font', self)
+        chooseFont = QtGui.QAction(QtGui.QIcon(''), 'Set &Font', self)
         chooseFont.setShortcut('Ctrl+F')
         chooseFont.setStatusTip(u'Choose font')
         chooseFont.triggered.connect(self.chooseFont)
 
 
-        chooseColor = QtGui.QAction(QtGui.QIcon(''), '&Color', self)
+        chooseColor = QtGui.QAction(QtGui.QIcon(''), 'Set &Color', self)
         chooseColor.setShortcut('Ctrl+L')
         chooseColor.setStatusTip(u'Choose color')
         chooseColor.triggered.connect(self.chooseColor)
@@ -197,12 +197,16 @@ class MainWindow(QtGui.QMainWindow):
         fileMenu.addAction(newFile)
         fileMenu.addAction(openFile)
         fileMenu.addAction(saveFile)
-        fileMenu.addAction(chooseFont)
-        fileMenu.addAction(chooseColor)
-        fileMenu.addAction(incFont)
-        fileMenu.addAction(decFont)
         fileMenu.addAction(pyInteractive)
         fileMenu.addAction(exitAction)
+
+        editMenu = menubar.addMenu('&Edit')
+        editMenu.addAction(chooseFont)
+        editMenu.addAction(chooseColor)
+        editMenu.addAction(incFont)
+        editMenu.addAction(decFont)
+
+        helpMenu = menubar.addMenu('&Help')
 
          # Toolbar
         QtGui.QAction(QtGui.QIcon('open.png'), '', self)
@@ -223,12 +227,11 @@ class MainWindow(QtGui.QMainWindow):
 
         self.show()
 
-def main():
 
+def main():
     app = QtGui.QApplication(sys.argv)
     main = MainWindow()
     sys.exit(app.exec_())
-
 
 if __name__ == '__main__':
     main()
