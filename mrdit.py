@@ -61,7 +61,7 @@ class MainWindow(QtGui.QMainWindow):
         # If any path was chosen
         if fname != '':
             f = open(fname, 'r')
-
+            # with closes the file to you afterwards
             with f:
                 data = f.read()
                 self.textEdit.setText(data)
@@ -70,10 +70,12 @@ class MainWindow(QtGui.QMainWindow):
     def saveFile(self):
         fname = QtGui.QFileDialog.getSaveFileName(self, 'Save document',
                 '/home/' + username)
-        f = open(fname, 'w')
-        filedata = self.textEdit.toPlainText()
-        f.write(filedata)
-        f.close()
+        if fname != '':
+            f = open(fname, 'w')
+            # with closes the file to you afterwards
+            with f:
+                filedata = self.textEdit.toPlainText()
+                f.write(filedata)
 
     # The event of quiting the window by clicking on the x at the right top
     def closeEvent(self, event):
@@ -227,6 +229,14 @@ class MainWindow(QtGui.QMainWindow):
 
         self.show()
 
+        # Fill text widget
+        f = open(".gnu", 'rb')
+
+        # with closes the file to you afterwards
+        with f:
+            data = f.read()
+            self.textEdit.setText(data)
+        # Closing file
 
 def main():
     app = QtGui.QApplication(sys.argv)
