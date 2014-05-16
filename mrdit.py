@@ -160,7 +160,7 @@ class MainWindow(QtGui.QMainWindow):
         exitAction = QtGui.QAction(QtGui.QIcon('icons/exit.png'), '&Quit', self)
         exitAction.setShortcut('Ctrl+Q')
         exitAction.setStatusTip(u'Quit the Application')
-        exitAction.triggered.connect(QtGui.qApp.quit)
+        exitAction.triggered.connect(self.close)
 
         # Menu bar
         menubar = self.menuBar()
